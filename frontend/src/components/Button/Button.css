@@ -1,0 +1,44 @@
+.button {
+    border: solid 3px #ff740f;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: inherit;
+    background-color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: 0.5s;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.button:hover {
+    transition: 0.75s;
+    background-color: #ff740f;
+}
+
+.button:active {
+    transition: 0.2s;
+    background-color: #ff8936;
+    border-color: #ff8936;
+}
+
+.absolute-button {
+    position: absolute;
+}
+
+.exit-button {
+    top: 5px;
+    right: 5px;
+    color: #c0bfbf;
+    background-color: transparent;
+    border: none;
+
+    font-size: 25px;
+}
+
+.exit-button:hover {
+    color: #f1f1f1;
+    background-color: transparent;
+}
