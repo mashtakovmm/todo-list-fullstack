@@ -1,0 +1,22 @@
+{
+  "name": "todoapi",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.12",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "main": "app.ts",
+  "scripts": {
+    "start": "nodemon app.ts",
+    "tsc": "tsc"
+  }
+}

@@ -1,12 +1,15 @@
 services:
   database:
     image: mongo:latest
+    container_name : mongo-db-container
+    command: mongod --auth
     restart: always
     ports:
       - 27017:27017
     env_file:
       - .env
     environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME}
       - MONGO_INITDB_ROOT_USERNAME=${DB_ROOT}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
     volumes:
