@@ -1,52 +1,37 @@
 import { Request, Response } from 'express';
 import Task from '../models/Task'
+import asyncWrapper from '../middleware/async-wrap';
 
-export const getAllTasks = async (req: Request, res: Response) => {
-    try {
-        const tasks = await Task.find();
-        res.status(201).json({
-            success: true, data: {
-                tasks, nbHits: tasks.length
-            }
-        });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err });
-    }
-}
-
-export const postTask = async (req: Request, res: Response) => {
-    try {
-        const task = await Task.create(req.body);
-        res.status(201).json({
-            success: true, task: task
-        });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err });
-    }
-}
-
-export const delTask = async (req: Request, res: Response) => {
-    try {
-        const task = await Task.findByIdAndDelete(req.params.id);
-        if (!task) {
-            res.status(500).json({ success: false, error: `No task with id ${req.params.id} found` })
+export const getAllTasks = asyncWrapper(async (req: Request, res: Response) => {
+    const tasks = await Task.find();
+    res.status(201).json({
+        success: true, data: {
+            tasks, nbHits: tasks.length
         }
-        res.status(201).json({ success: true });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err });
-    }
-}
+    })
+})
 
-export const changeTask = async (req: Request, res: Response) => {
-    try {
-        const task = await Task.findOneAndUpdate({ _id: req.params.id }, req.body,
-            {
-                new: true,
-                runValidators: true
-            });
-        res.status(201).json({ success: true, task: task });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err });
+export const postTask = asyncWrapper(async (req: Request, res: Response) => {
+    const task = await Task.create(req.body);
+    res.status(201).json({
+        success: true, task: task
+    });
+})
+
+export const delTask = asyncWrapper(async (req: Request, res: Response) => {
+    const task = await Task.findByIdAndDelete(req.params.id);
+    if (!task) {
+        res.status(404).json({ success: false, error: `No task with id ${req.params.id} found` })
     }
-}
+    res.status(201).json({ success: true });
+})
+
+export const changeTask = asyncWrapper(async (req: Request, res: Response) => {
+    const task = await Task.findOneAndUpdate({ _id: req.params.id }, req.body,
+        {
+            new: true,
+            runValidators: true
+        });
+    res.status(201).json({ success: true, task: task });
+})
 
