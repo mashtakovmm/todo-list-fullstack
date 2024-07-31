@@ -1,18 +1,13 @@
 import { Router } from "express";
-
-const router = Router();
-
-const { getAllTasks,
+import {
+    getAllTasks,
     postTask,
     delTask,
-    changeTask } = require('../controllers/tasks')
+    changeTask
+} from '../controllers/tasks'
+const router = Router();
 
 router.route('/').get(getAllTasks).post(postTask)
-router.route('/:id').delete(delTask).put(changeTask)
+router.route('/:id').delete(delTask).patch(changeTask)
 
-// get all tasks
-// patch task status by id
-// del task by id
-// put task
-
-module.exports = router
+export default router;

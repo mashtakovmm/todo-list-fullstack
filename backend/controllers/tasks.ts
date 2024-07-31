@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Task from '../models/Task'
 
-const getAllTasks = async (req: Request, res: Response) => {
+export const getAllTasks = async (req: Request, res: Response) => {
     try {
         const tasks = await Task.find();
         res.status(201).json(tasks);
@@ -10,7 +10,7 @@ const getAllTasks = async (req: Request, res: Response) => {
     }
 }
 
-const postTask = async (req: Request, res: Response) => {
+export const postTask = async (req: Request, res: Response) => {
     try {
         const task = await Task.create(req.body);
         res.status(201).json(task);
@@ -19,7 +19,7 @@ const postTask = async (req: Request, res: Response) => {
     }
 }
 
-const delTask = async (req: Request, res: Response) => {
+export const delTask = async (req: Request, res: Response) => {
     try {
         const task = await Task.findByIdAndDelete(req.params.id);
         if (!task) {
@@ -31,7 +31,7 @@ const delTask = async (req: Request, res: Response) => {
     }
 }
 
-const changeTask = async (req: Request, res: Response) => {
+export const changeTask = async (req: Request, res: Response) => {
     try {
         const task = await Task.findOneAndUpdate({ _id: req.params.id }, req.body,
             {
@@ -44,4 +44,3 @@ const changeTask = async (req: Request, res: Response) => {
     }
 }
 
-export { getAllTasks, postTask, delTask, changeTask };

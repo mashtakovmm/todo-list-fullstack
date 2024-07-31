@@ -1,7 +1,7 @@
 import express from "express"
-const path = require('path')
-const mongoose = require('mongoose');
-const tasks = require('./routes/tasks')
+import path from 'path';
+import mongoose from 'mongoose';
+import tasks from './routes/tasks';
 
 require("dotenv").config({ path: path.resolve(`${__dirname}/../.env`) });
 
