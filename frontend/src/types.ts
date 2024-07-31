@@ -12,7 +12,7 @@ export interface ButtonPropsType extends HasCallbackType {
 }
 
 export interface TodoItemType {
-    id: number,
+    id: string,
     name: string,
     description?: string,
     completed: boolean,
