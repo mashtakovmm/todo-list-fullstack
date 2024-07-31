@@ -1,9 +1,11 @@
 import express from "express"
 import path from 'path';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import tasks from './routes/tasks';
+import notFound from './middleware/not-found'
 
-require("dotenv").config({ path: path.resolve(`${__dirname}/../.env`) });
+dotenv.config({ path: path.resolve(`${__dirname}/../.env`) });
 
 const DB_ROOT = process.env.DB_ROOT;
 const DB_PASS = process.env.DB_PASS;
@@ -34,4 +36,5 @@ start();
 
 app.use(express.json());
 app.use('/api/v1/tasks/', tasks);
+app.use(notFound)
 
