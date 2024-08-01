@@ -1,7 +1,7 @@
 import "./InputForm.css"
 import Button from "../Button/Button";
 import { MdClose, MdOutlineCreate } from "react-icons/md";
-import { APIError, HasCallbackType, TodoItemType } from "../../types";
+import { APIError, HasCallbackType } from "../../types";
 import { useAddTaskMutation } from "../../services/tasks";
 import { useCallback, useState } from "react";
 

@@ -1,13 +1,13 @@
 import TodoItem from "./components/TodoItem/TodoItem"
 import Header from "./components/Header/Header"
 import InputForm from "./components/InputForm/InputForm";
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useGetAllTasksQuery } from "./services/tasks";
 
 
 function App() {
     const [showForm, setShowForm] = useState(false);
-    const { data, error, isLoading } = useGetAllTasksQuery();
+    const { data, isLoading } = useGetAllTasksQuery();
 
     function setShowFormCallback() {
         setShowForm(prev => !prev)
