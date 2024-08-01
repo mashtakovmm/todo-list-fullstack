@@ -12,9 +12,41 @@ export interface ButtonPropsType extends HasCallbackType {
 }
 
 export interface TodoItemType {
-    id: string,
+    _id: string,
     name: string,
     description?: string,
     completed: boolean,
-    deadline?: Date,
+    deadline?: string,
+}
+
+export interface APIResponseType {
+    success: boolean;
+    data: {
+        tasks: TodoItemType[];
+        nbHits: number;
+    };
+}
+
+export interface APIError {
+    status: number;
+    data: {
+        success: boolean;
+        error: {
+            errors: {
+                name: {
+                    name: string;
+                    properties: {
+                        message: string;
+                        type: string;
+                        path: string;
+                    };
+                    kind: string;
+                    path: string;
+                };
+            };
+        };
+        _message: string;
+        name: string;
+        message: string;
+    }
 }

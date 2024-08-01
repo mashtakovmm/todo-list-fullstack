@@ -20,6 +20,7 @@
     display: flex;
     flex-direction: column;
     max-width: 420px;
+    cursor: pointer;
 }
 
 .del-button {
@@ -38,4 +39,12 @@
 .del-button:active {
     border-color: #ff2c2c;
     background-color: #ff2c2c;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+.completed .todo-left {
+    opacity: 0.5;
 }

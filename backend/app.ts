@@ -2,6 +2,7 @@ import express from "express"
 import path from 'path';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import tasks from './routes/tasks';
 import notFound from './middleware/not-found'
 import errorWrapper from "./middleware/error-wrap";
@@ -18,10 +19,19 @@ const connectionString = `mongodb://${DB_ROOT}:${DB_PASS}@localhost:27017/${DB_N
 const connectDB = () => {
     return mongoose.connect(connectionString)
         .then(() => console.log('Connected to MongoDB'))
+        .then(() => console.log('OK'))
         .catch((err: Error) => console.error('Could not connect to MongoDB...', err));
 }
 
 const app = express();
+
+app.use(cors(
+    { origin: 'http://localhost:5173' }
+));
+app.use(express.json());
+app.use('/api/v1/tasks/', tasks);
+app.use(notFound);
+app.use(errorWrapper);
 
 const start = async () => {
     try {
@@ -34,9 +44,4 @@ const start = async () => {
 }
 
 start();
-
-app.use(express.json());
-app.use('/api/v1/tasks/', tasks);
-app.use(notFound)
-app.use(errorWrapper)
 
