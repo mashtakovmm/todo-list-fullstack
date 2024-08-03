@@ -25,9 +25,20 @@ const connectDB = () => {
 
 const app = express();
 
-app.use(cors(
-    { origin: 'http://localhost:5173' }
-));
+const WHITELIST = ['http://localhost:5173', 'http://localhost:80', 'http://localhost/']
+
+const corsOptions: cors.CorsOptions = {
+    origin: function (origin: string | undefined, callback: Function) {
+        if (WHITELIST.includes(origin || '')) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use('/api/v1/tasks/', tasks);
 app.use(notFound);
