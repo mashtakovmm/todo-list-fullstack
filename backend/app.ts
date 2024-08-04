@@ -13,9 +13,10 @@ const DB_ROOT = process.env.DB_ROOT;
 const DB_PASS = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
 const BACKEND_PORT = process.env.BACKEND_PORT || 8000;
+const MONGO_DB_HOST = process.env.MONGO_DB_HOST
 
 
-const connectionString = `mongodb://${DB_ROOT}:${DB_PASS}@localhost:27017/${DB_NAME}?authSource=admin&retryWrites=true`;
+const connectionString = `mongodb://${DB_ROOT}:${DB_PASS}@${MONGO_DB_HOST}:27017/${DB_NAME}?authSource=admin&retryWrites=true`;
 const connectDB = () => {
     return mongoose.connect(connectionString)
         .then(() => console.log('Connected to MongoDB'))
@@ -25,11 +26,10 @@ const connectDB = () => {
 
 const app = express();
 
-const WHITELIST = ['http://localhost:5173', 'http://localhost:80', 'http://localhost/']
-
 const corsOptions: cors.CorsOptions = {
     origin: function (origin: string | undefined, callback: Function) {
-        if (WHITELIST.includes(origin || '')) {
+        const regex = /^http:\/\/localhost(:[0-9]+)?$/;
+        if (regex.test(origin || '')) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
@@ -37,7 +37,7 @@ const corsOptions: cors.CorsOptions = {
     },
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 app.use('/api/v1/tasks/', tasks);

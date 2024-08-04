@@ -16,8 +16,10 @@ const InputForm: React.FC<HasCallbackType> = ({ callback }) => {
         const newTask = {
             name: name,
             description: description,
-            date: date,
+            deadline: date,
         };
+        console.log(newTask);
+        
         addTaskMutation(newTask).then((res) => {
             if(!res.error && callback) {
                 callback();
