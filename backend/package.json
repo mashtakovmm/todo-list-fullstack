@@ -19,7 +19,8 @@
   },
   "main": "app.ts",
   "scripts": {
-    "start": "nodemon app.ts",
+    "dev": "nodemon app.ts",
+    "start": "tsc && node app.js",
     "tsc": "tsc"
   }
 }

@@ -1,6 +1,6 @@
 services:
   database:
-    image: mongo:latest
+    image: mongo:8.0.0-rc15-jammy
     container_name : mongo-db-container
     command: mongod --auth
     restart: always
@@ -14,6 +14,42 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
     volumes:
       - mongo-data:/data/db
-      
+    networks:
+      - backend
+
+  backend:
+    container_name: todo-backend-container
+    restart: always
+    build: 
+      context: ./backend
+      dockerfile: dockerfile
+    env_file:
+      - .env
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    environment:
+      - BACKENDPORT=${BACKEND_PORT}
+      - MONGO_DB_HOST=mongo-db-container
+    depends_on:
+      - database
+    networks:
+      - backend
+      - frontend
+  
+  frontend:
+    container_name: todo-frontend-container
+    restart: on-failure
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    ports:
+      - 80:80
+    networks:
+      - frontend
+
 volumes:
   mongo-data:
+
+networks:
+  backend:
+  frontend:
